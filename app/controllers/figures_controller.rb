@@ -39,17 +39,16 @@ class FiguresController < ApplicationController
     @figure = Figure.find(params[:id])
 
     @figure.name = params[:figure][:name] if params[:figure][:name] != ""
-
-    @figure.update(title_ids: params[:figure][:title_ids], landmark_ids: params[:figure][:landmark_ids])
-
-    if params[:title][:name] != ""
-      title = Title.create(params[:title])
-      @figure.titles << title
-    end
+    @figure.update(landmark_ids: params[:figure][:landmark_ids], title_ids: params[:figure][:title_ids])
 
     if params[:landmark][:name] != ""
-      landmark = Landmark.create(params[:landmark])
+      landmark = Landmark.new(params[:landmark])
       @figure.landmarks << landmark
+    end
+
+    if param[:title][:name] != ""
+      title = Title.new(params[:title])
+      @figure.titles << title
     end
 
     @figure.save
